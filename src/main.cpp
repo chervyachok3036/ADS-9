@@ -15,8 +15,8 @@ void PrintPerm(const std::vector<char>& perm) {
   std::cout << '\n';
 }
 
-long long Factorial(int n) {
-  long long result = 1;
+int64_t Factorial(int n) {
+  int64_t result = 1;
   for (int i = 2; i <= n; ++i) result *= i;
   return result;
 }
@@ -47,7 +47,7 @@ void RunDemo() {
 using Clock = std::chrono::high_resolution_clock;
 using Nanoseconds = std::chrono::nanoseconds;
 
-long long MeasureGetAllPerms(int n) {
+int64_t MeasureGetAllPerms(int n) {
   std::vector<char> alpha;
   for (int i = 1; i <= n; ++i) alpha.push_back(static_cast<char>('0' + i));
   PMTree tree(alpha);
@@ -59,12 +59,12 @@ long long MeasureGetAllPerms(int n) {
   return std::chrono::duration_cast<Nanoseconds>(t1 - t0).count();
 }
 
-long long MeasureGetPerm(int n, bool use_fast, std::mt19937* rng) {
+int64_t MeasureGetPerm(int n, bool use_fast, std::mt19937* rng) {
   std::vector<char> alpha;
   for (int i = 1; i <= n; ++i) alpha.push_back(static_cast<char>('0' + i));
   PMTree tree(alpha);
 
-  std::uniform_int_distribution<long long> dist(1, Factorial(n));
+  std::uniform_int_distribution<int64_t> dist(1, Factorial(n));
   const int num = static_cast<int>(dist(*rng));
 
   auto t0 = Clock::now();
@@ -81,12 +81,12 @@ void RunTimingExperiment() {
   constexpr int kNMax = 8;
 
   std::vector<int> sizes;
-  std::vector<long long> t_all, t_p1, t_p2;
+  std::vector<int64_t> t_all, t_p1, t_p2;
 
   for (int n = 1; n <= kNMax; ++n) {
-    const long long ta = MeasureGetAllPerms(n);
-    const long long t1 = MeasureGetPerm(n, false, &rng);
-    const long long t2 = MeasureGetPerm(n, true, &rng);
+    const int64_t ta = MeasureGetAllPerms(n);
+    const int64_t t1 = MeasureGetPerm(n, false, &rng);
+    const int64_t t2 = MeasureGetPerm(n, true, &rng);
 
     sizes.push_back(n);
     t_all.push_back(ta);
@@ -99,7 +99,7 @@ void RunTimingExperiment() {
   std::ofstream py("result/make_plot.py");
 
   auto WriteList = [&](const std::string& name,
-                       const std::vector<long long>& v) {
+                       const std::vector<int64_t>& v) {
     py << name << " = [";
     for (size_t i = 0; i < v.size(); ++i) {
       py << v[i];
