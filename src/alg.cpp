@@ -1,11 +1,10 @@
 // Copyright 2022 NNTU-CS
-#include "tree.h"
-
 #include <cstdlib>
 #include <fstream>
 #include <iostream>
 #include <locale>
 #include <vector>
+#include "tree.h"
 
 void PMTree::BuildTree(TreeNode* node, const std::vector<char>& remaining) {
   if (remaining.empty()) return;
