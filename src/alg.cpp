@@ -29,12 +29,10 @@ PMTree::PMTree(const std::vector<char>& elems)
 
 PMTree::~PMTree() { delete root_; }
 
-namespace {
-
-void Dfs(TreeNode* node,
-         std::vector<char>* path,
-         int target_depth,
-         std::vector<std::vector<char>>* result) {
+static void Dfs(TreeNode* node,
+                std::vector<char>* path,
+                int target_depth,
+                std::vector<std::vector<char>>* result) {
   if (static_cast<int>(path->size()) == target_depth) {
     result->push_back(*path);
     return;
@@ -46,12 +44,10 @@ void Dfs(TreeNode* node,
   }
 }
 
-int64_t Factorial(int n) {
+static int64_t Factorial(int n) {
   int64_t result = 1;
   for (int i = 2; i <= n; ++i) result *= i;
   return result;
-}
-
 }
 
 std::vector<std::vector<char>> getAllPerms(const PMTree& tree) {
