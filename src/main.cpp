@@ -1,12 +1,11 @@
 // Copyright 2022 NNTU-CS
-#include "tree.h"
-
 #include <chrono>
 #include <fstream>
 #include <iostream>
 #include <random>
 #include <string>
 #include <vector>
+#include "tree.h"
 
 namespace {
 
